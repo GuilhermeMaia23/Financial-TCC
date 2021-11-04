@@ -1,8 +1,8 @@
 import React from 'react'
-import Textocentral from '../Components/Textocentral'
+import {Text} from 'react-native'
 
 export default props => (
-    <Textocentral corFundo='#e53935'>
+    <Text>
         Reports
-    </Textocentral>
+    </Text>
 )
