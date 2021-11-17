@@ -31,7 +31,6 @@ export default class HomeScreen extends Component {
     })
 
     this.setState({ expensive, showAddTask: false })
-    console.warn(expensive)
   }
   render() {
     return (

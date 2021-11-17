@@ -1,26 +1,47 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
 import moment from 'moment'
 import 'moment/locale/pt-br'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default function ExpensivesList(props) {
 
     const date = moment(props.date).locale('pt-br').format('L')
 
+    const rightContent = () => {
+        return(
+            <TouchableOpacity style={styleExpensive.righ}>
+                <Icon name="trash" size={30} color='#FFF'/>
+            </TouchableOpacity>
+        )
+    }
+
+    const leftContent = () => {
+        return(
+            <TouchableOpacity style={styleExpensive.left}>
+                <Icon name="pencil" size={30} color='#FFF' />
+            </TouchableOpacity>
+        )
+    }
+
     return (
-        <View style={styleExpensive.container}>
-            <View style={styleExpensive.categoriesContainer}>
-                <Text style={styleExpensive.text}>{props.categories} </Text>
+        <Swipeable 
+        renderRightActions={rightContent}
+        renderLeftActions={leftContent}>
+            <View style={styleExpensive.container}>
+                <View style={styleExpensive.categoriesContainer}>
+                    <Text style={styleExpensive.text}>{props.categories} </Text>
+                </View>
+                <View style={styleExpensive.nameDateContainer}>
+                    <Text style={styleExpensive.text}>{props.name}</Text>
+                    <Text style={styleExpensive.text}>{date}</Text>
+                </View>
+                <View style={styleExpensive.valeuContainer}>
+                    <Text style={styleExpensive.text}>{props.expensiveValue}</Text>
+                </View>
             </View>
-            <View style={styleExpensive.nameDateContainer}>
-                <Text style={styleExpensive.text}>{props.name}</Text>
-                <Text style={styleExpensive.text}>{date}</Text>
-            </View>
-            <View style={styleExpensive.valeuContainer}>
-                <Text style={styleExpensive.text}>{props.expensiveValue}</Text>
-            </View>
-        </View>
+        </Swipeable>
     )
 }
 
@@ -59,5 +80,17 @@ const styleExpensive = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: '30%'
-    },
+    }, righ: {
+        backgroundColor: 'red',
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: "flex-end",
+        paddingHorizontal: 20,
+    }, left: {
+        backgroundColor: 'yellow',
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: "flex-end",
+        paddingHorizontal: 20,
+    }
 })

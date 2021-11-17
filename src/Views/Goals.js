@@ -31,8 +31,6 @@ export default class Goals extends Component {
                 })
 
                 this.setState({ goals, showAddTask: false})
-                console.warn(goals)
-
         }
 
         render() {
