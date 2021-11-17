@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Button, SafeAreaView, Text, View, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import { Button, SafeAreaView, Text, View, TouchableOpacity, StyleSheet, Alert, FlatList, StatusBar } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import NewGoals from './NewGoals'
+import GoalsList from '../Components/GoalsList'
 
 
 const initialState = {
@@ -37,6 +38,7 @@ export default class Goals extends Component {
         render() {
                 return (
                         <View style={styles.container}>
+                                <StatusBar backgroundColor = '#0000FF' />
                                 <NewGoals isVisible={this.state.showAddTask}
                                 onCancel={() => this.setState({showAddTask: false})}
                                 onSave={this.addGoals}/>
@@ -46,6 +48,12 @@ export default class Goals extends Component {
                                         <Icon name="plus" size={20}
                                                 color='#FFF' />
                                 </TouchableOpacity>
+                                <View>
+                                        <FlatList 
+                                        data={this.state.goals}
+                                        keyExtractor={item => `${item.id}`}
+                                        renderItem={({item}) => <GoalsList {...item} />}/>
+                                </View>
                         </View>
 
                 )
@@ -55,7 +63,8 @@ export default class Goals extends Component {
 
 const styles = StyleSheet.create({
         container: {
-                flex: 1
+                flex: 1,
+                backgroundColor: '#D2E1FF'
         },
         addButton: {
                 position: 'absolute',
@@ -64,7 +73,7 @@ const styles = StyleSheet.create({
                 width: 50,
                 height: 50,
                 borderRadius: 25,
-                backgroundColor: 'red',
+                backgroundColor: 'green',
                 justifyContent: 'center',
                 alignItems: 'center'
         }

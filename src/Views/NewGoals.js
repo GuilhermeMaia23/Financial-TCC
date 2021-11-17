@@ -17,7 +17,6 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 const initialState = {
         name: ' ',
         goalsValue: ' ',
-        dateInit: new Date(),
         dateEnd: new Date(),
         showDatePickerGoals: false
 }
@@ -37,32 +36,6 @@ export default class NewGoals extends Component {
 
                 this.props.onSave && this.props.onSave(newGoals)
                 this.setState({...initialState})
-        }
-
-
-        getDateTimePickerGoalsInit = () => {
-                let datePicker = <DateTimePicker
-                        value={this.state.dateInit}
-                        onChange={(_, dateInit) => this.setState({ dateInit, showDatePickerGoals: false })}
-                        mode='date' />
-
-                const dateGoalsStringInit = moment(this.state.date).format("l")
-
-                if (Platform.OS === 'android') {
-                        datePicker = (
-                                <View>
-                                        <TouchableOpacity
-                                                onPress={() => this.setState({ showDatePickerGoals: true })}>
-                                                <Text>
-                                                        {dateGoalsStringInit}
-                                                </Text>
-                                        </TouchableOpacity>
-                                        {this.state.showDatePickerGoals && datePicker}
-                                </View>
-                        )
-
-                }
-                return datePicker
         }
 
         getDateTimePickerGoalsEnd = () => {
@@ -125,11 +98,6 @@ export default class NewGoals extends Component {
                                                 value={this.state.goalsValue}
                                                 keyboardType="numeric"
                                         />
-                                        <Text>
-                                                Digite a  data de início da meta
-                                        </Text>
-
-                                        {this.getDateTimePickerGoalsInit()}
                                         <Text>
                                                 Digite a  data de encerramento da meta
                                         </Text>

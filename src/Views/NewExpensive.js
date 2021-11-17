@@ -8,7 +8,8 @@ import {
         Modal,
         StyleSheet,
         TouchableWithoutFeedback,
-        TouchableOpacity
+        TouchableOpacity,
+        Picker,
 } from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -19,6 +20,7 @@ const initialState = {
         name: ' ',
         expensiveValue: ' ',
         photo: '',
+        categories: 'Receita',
         dateExpensive: new Date(),
         showDatePickerExpensive: false
 }
@@ -33,6 +35,7 @@ export default class NewExpensive extends Component {
                         name: this.state.name,
                         expensiveValue: this.state.expensiveValue,
                         dateExpensive: this.state.dateExpensive,
+                        categories: this.state.categories
                 }
                 this.props.onSave && this.props.onSave(newExpensive)
                 this.setState({...initialState})
@@ -75,6 +78,14 @@ export default class NewExpensive extends Component {
                                 </TouchableWithoutFeedback>
                                 <View>
                                         <Text>
+                                                Selecione a categoria:
+                                        </Text>
+                                        <Picker onValueChange={( itemValue ,itemIndex) => this.setState({itemValue}) }
+                                        selectedValue={this.categories}>
+                                                <Picker.Item label="Receita" value="Receita"/>
+                                                <Picker.Item label="Despesa" value="Despesa"/>
+                                        </Picker>
+                                        <Text>
                                                 Digite a despesa:
                                 </Text>
 
@@ -93,15 +104,6 @@ export default class NewExpensive extends Component {
                                                 onChangeText={expensiveValue => this.setState({ expensiveValue })}
                                                 value={this.setState.expensiveValue}
                                                 keyboardType="numeric"
-                                        />
-                                        <Text>
-                                                Insira a foto da nota
-                                </Text>
-
-                                        <TextInput
-                                                style={{ borderWidth: 1 }}
-                                                onChangeText={photo => this.setState({ photo })}
-                                                value={this.setState.photo}
                                         />
                                         <Text>
                                                 Confirme a  data da despesa: 
