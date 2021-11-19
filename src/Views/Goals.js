@@ -33,6 +33,11 @@ export default class Goals extends Component {
                 this.setState({ goals, showAddTask: false})
         }
 
+        deleteGoals = id => {
+                const goals = this.state.goals.filter(goals => goals.id !== id)
+                this.setState({goals})
+        }
+
         render() {
                 return (
                         <View style={styles.container}>
@@ -50,7 +55,7 @@ export default class Goals extends Component {
                                         <FlatList 
                                         data={this.state.goals}
                                         keyExtractor={item => `${item.id}`}
-                                        renderItem={({item}) => <GoalsList {...item} />}/>
+                                        renderItem={({item}) => <GoalsList {...item} onDelete={this.deleteGoals} />}/>
                                 </View>
                         </View>
 

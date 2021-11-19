@@ -11,7 +11,8 @@ export default function ExpensivesList(props) {
 
     const rightContent = () => {
         return(
-            <TouchableOpacity style={styleExpensive.righ}>
+            <TouchableOpacity style={styleExpensive.right}
+            onPress={() => props.onDelete && props.onDelete(props.id)}>
                 <Icon name="trash" size={30} color='#FFF'/>
             </TouchableOpacity>
         )
@@ -19,7 +20,7 @@ export default function ExpensivesList(props) {
 
     const leftContent = () => {
         return(
-            <TouchableOpacity style={styleExpensive.left}>
+            <TouchableOpacity style={styleExpensive.left} onPress={() => props.onEdit(props.id)}>
                 <Icon name="pencil" size={30} color='#FFF' />
             </TouchableOpacity>
         )
@@ -80,7 +81,7 @@ const styleExpensive = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: '30%'
-    }, righ: {
+    }, right: {
         backgroundColor: 'red',
         flexDirection: "row",
         alignItems: 'center',

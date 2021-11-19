@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import ExpensiveList from '../Components/Expensives'
 
 const initialState = {
-  showAddTask: false,
+  showAddExpensive: false,
   expensive: []
 
 }
@@ -30,29 +30,40 @@ export default class HomeScreen extends Component {
       categories: newExpensive.categories
     })
 
-    this.setState({ expensive, showAddTask: false })
+    this.setState({ expensive, showAddExpensive: false })
+  }
+
+  deleteExpensive = id => {
+    const expensive =     this.state.expensive.map(expensive => expensive.id !== id)
+    this.setState({expensive})
+  }
+
+  editExpensive = id => {
+
+    const expensive= this.state.expensive.filter(expensive => expensive.id !== id)
+    this.setState({expensive , showAddExpensive: true})
   }
   render() {
     return (
       <View style={styleHome.container} >
         <StatusBar backgroundColor='#0000FF' />
-        <NewExpensive isVisible={this.state.showAddTask}
-          onCancel={() => this.setState({ showAddTask: false })}
+        <NewExpensive isVisible={this.state.showAddExpensive}
+          onCancel={() => this.setState({ showAddExpensive: false })}
           onSave={this.addExpensive} />
         <View style={styleHome.saldo}>
           <Text style={styleHome.saldoText}>
-            Saldo Total:
+            Saldo Total: {}
           </Text>
         </View>
         <View style={styleHome.expensiveList}>
           <FlatList
             data={this.state.expensive}
             keyExtractor={item => `${item.id}`}
-            renderItem={({ item }) => <ExpensiveList {...item} />} />
+            renderItem={({ item }) => <ExpensiveList {...item} onDelete={this.deleteExpensive} onEdit={this.editExpensive}/>} />
         </View>
         <TouchableOpacity style={styleHome.addButton}
           activeOpacity={0.7}
-          onPress={() => this.setState({ showAddTask: true })}>
+          onPress={() => this.setState({ showAddExpensive: true })}>
           <Icon name="plus" size={20}
             color="white" />
         </TouchableOpacity>
