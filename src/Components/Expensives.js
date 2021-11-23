@@ -20,7 +20,8 @@ export default function ExpensivesList(props) {
 
     const leftContent = () => {
         return(
-            <TouchableOpacity style={styleExpensive.left} onPress={() => props.onEdit(props.id)}>
+            <TouchableOpacity style={styleExpensive.left} 
+            onPress={() => props.onEdit && props.onEdit(props.id)}>
                 <Icon name="pencil" size={30} color='#FFF' />
             </TouchableOpacity>
         )

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Button, SafeAreaView, Text, View, TouchableOpacity, StyleSheet, Alert, FlatList, StatusBar } from 'react-native'
+import { SafeAreaView, Text, View, TouchableOpacity, StyleSheet, Alert, FlatList, StatusBar } from 'react-native'
 import NewExpensive from './NewExpensive'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ExpensiveList from '../Components/Expensives'
 
 const initialState = {
   showAddExpensive: false,
-  expensive: []
-
+  expensive: [],
+  selected: {}
 }
 
 export default class HomeScreen extends Component {
@@ -34,22 +34,26 @@ export default class HomeScreen extends Component {
   }
 
   deleteExpensive = id => {
-    const expensive =     this.state.expensive.map(expensive => expensive.id !== id)
+    const expensive =  this.state.expensive.filter(expensive => expensive.id !== id)
     this.setState({expensive})
   }
 
   editExpensive = id => {
-
-    const expensive= this.state.expensive.filter(expensive => expensive.id !== id)
-    this.setState({expensive , showAddExpensive: true})
+    const expensive= this.state.expensive.filter(expensive => expensive.id === id)
+    this.setState({selected: expensive})
+    this.setState({showAddExpensive: true})
+    console.log(expensive)
   }
+
   render() {
     return (
       <View style={styleHome.container} >
         <StatusBar backgroundColor='#0000FF' />
         <NewExpensive isVisible={this.state.showAddExpensive}
           onCancel={() => this.setState({ showAddExpensive: false })}
-          onSave={this.addExpensive} />
+          onSave={this.addExpensive}
+          onSelected={this.state.selected}
+          onEdit={this.editExpensive} />
         <View style={styleHome.saldo}>
           <Text style={styleHome.saldoText}>
             Saldo Total: {}

@@ -22,14 +22,15 @@ const initialState = {
         photo: '',
         categories: 'Receita',
         dateExpensive: new Date(),
-        showDatePickerExpensive: false
+        showDatePickerExpensive: false,
+        methodEdit: false
 }
 
 export default class NewExpensive extends Component {
         state = {
                 ...initialState
         }
-        
+
         save = () => {
                 const newExpensive = {
                         name: this.state.name,
@@ -38,7 +39,18 @@ export default class NewExpensive extends Component {
                         categories: this.state.categories
                 }
                 this.props.onSave && this.props.onSave(newExpensive)
-                this.setState({...initialState})
+                this.setState({ ...initialState })
+
+        }
+        edit = () => {
+                const editExpensive = {
+                        name: this.state.name,
+                        expensiveValue: this.state.expensiveValue,
+                        dateExpensive: this.state.dateExpensive,
+                        categories: this.state.categories
+                }
+                this.props.onEdit && this.props.onEdit(editExpensive)
+                this.setState({ ...initialState })
         }
 
         getDateTimePickerExpensive = () => {
@@ -64,26 +76,30 @@ export default class NewExpensive extends Component {
                 return datePicker
         }
 
+        editOrSave = () => {
+        }
 
         render() {
+                const { name, expensiveValue, dateExpensive, categories } = this.props.onSelected[0] || {}
                 return (
                         <Modal transparent={true}
                                 visible={this.props.isVisible}
                                 onRequestClose={this.props.onCancel}
-                                animationType='slide'>
+                                animationType='slide'
+                        >
                                 <TouchableWithoutFeedback
                                         onPress={this.props.onCancel}>
                                         <View style={styles.background}>
                                         </View>
                                 </TouchableWithoutFeedback>
-                                <View>
+                                <View style={styles.modalContainer}>
                                         <Text>
                                                 Selecione a categoria:
                                         </Text>
-                                        <Picker onValueChange={( itemValue ,itemIndex) => this.setState({itemValue}) }
-                                        selectedValue={this.categories}>
-                                                <Picker.Item label="Receita" value="Receita"/>
-                                                <Picker.Item label="Despesa" value="Despesa"/>
+                                        <Picker onValueChange={(itemValue, itemIndex) => this.setState({ itemValue })}
+                                                selectedValue={this.categories}>
+                                                <Picker.Item label="Receita" value="Receita" />
+                                                <Picker.Item label="Despesa" value="Despesa" />
                                         </Picker>
                                         <Text>
                                                 Digite a despesa:
@@ -92,7 +108,7 @@ export default class NewExpensive extends Component {
                                         <TextInput
                                                 style={{ borderWidth: 1 }}
                                                 onChangeText={name => this.setState({ name })}
-                                                value={this.state.text}
+                                                value={this.state.text || name}
                                         />
 
                                         <Text>
@@ -102,21 +118,27 @@ export default class NewExpensive extends Component {
                                         <TextInput
                                                 style={{ borderWidth: 1 }}
                                                 onChangeText={expensiveValue => this.setState({ expensiveValue })}
-                                                value={this.setState.expensiveValue}
+                                                value={this.setState.expensiveValue || expensiveValue}
                                                 keyboardType="numeric"
                                         />
                                         <Text>
-                                                Confirme a  data da despesa: 
+                                                Confirme a  data da despesa:
                                 </Text>
 
                                         {this.getDateTimePickerExpensive()}
+
                                         <Button
                                                 title="Salvar"
                                                 onPress={this.save}
                                         />
                                         <Button
+                                                title="Editar"
+                                                onPress={this.edit}
+                                        />
+                                        <Button
                                                 title="Cancelar"
                                                 onPress={this.props.onCancel}
+
                                         />
 
                                 </View>
@@ -134,5 +156,7 @@ const styles = StyleSheet.create({
         background: {
                 flex: 1,
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        }, modalContainer: {
+                backgroundColor: '#FFF'
         }
 })
