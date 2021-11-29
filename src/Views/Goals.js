@@ -23,13 +23,14 @@ export default class Goals extends Component {
 
                 const goals = [...this.state.goals]
                 goals.push({
-                        id:Math.random,
+                        id: Math.random(),
                         text: newGoals.text,
                         goalsValue: newGoals.goalsValue,
-                        dateInit: newGoals.dateInit,
-                        dateEnd: newGoals.dateEnd
-                })
+                        dateEnd: newGoals.dateEnd,
+                        amountCollected: newGoals.amountCollected
 
+                })
+                console.log(goals)
                 this.setState({ goals, showAddTask: false})
         }
 

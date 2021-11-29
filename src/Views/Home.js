@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, Text, View, TouchableOpacity, StyleSheet, Alert, FlatList, StatusBar } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, Alert, FlatList, StatusBar } from 'react-native'
 import NewExpensive from './NewExpensive'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ExpensiveList from '../Components/Expensives'
@@ -45,6 +45,18 @@ export default class HomeScreen extends Component {
     console.log(expensive)
   }
 
+  SaldoTotal = expensive => {
+    let totalValue = (this.state.expensive)
+    console.log(totalValue)
+
+    if (this.state.categories === 'Receita'){
+      totalValue.expensiveValue =+  this.state.expensiveValue
+    } else {
+      totalValue.expensiveValue =- this.state.expensiveValue
+    }
+    console.log(totalValue)
+  }
+
   render() {
     return (
       <View style={styleHome.container} >
@@ -56,7 +68,7 @@ export default class HomeScreen extends Component {
           onEdit={this.editExpensive} />
         <View style={styleHome.saldo}>
           <Text style={styleHome.saldoText}>
-            Saldo Total: {}
+            Saldo Total: {""}
           </Text>
         </View>
         <View style={styleHome.expensiveList}>

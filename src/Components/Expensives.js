@@ -1,9 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import moment from 'moment'
-import 'moment/locale/pt-br'
-import Icon from 'react-native-vector-icons/FontAwesome'
+
 
 export default function ExpensivesList(props) {
 
@@ -40,7 +38,7 @@ export default function ExpensivesList(props) {
                     <Text style={styleExpensive.text}>{date}</Text>
                 </View>
                 <View style={styleExpensive.valeuContainer}>
-                    <Text style={styleExpensive.text}>{props.expensiveValue}</Text>
+                    <Text style={styleExpensive.text}>{"R$ " + props.expensiveValue}</Text>
                 </View>
             </View>
         </Swipeable>
@@ -52,7 +50,7 @@ const styleExpensive = StyleSheet.create({
         flexDirection: 'row',
         borderColor: '#AAA',
         borderBottomWidth: 1,
-        paddingVertical: 10,
+        padding: 10,
         backgroundColor: '#FFF',
         width: '90%',
         alignSelf: 'center',
@@ -89,7 +87,7 @@ const styleExpensive = StyleSheet.create({
         justifyContent: "flex-end",
         paddingHorizontal: 20,
     }, left: {
-        backgroundColor: 'yellow',
+        backgroundColor: '#ffef2a',
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: "flex-end",

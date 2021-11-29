@@ -16,16 +16,16 @@ import 'moment/locale/pt-br'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 
+
 const initialState = {
         name: ' ',
-        expensiveValue: ' ',
+        expensiveValue: parseFloat(''),
         photo: '',
-        categories: 'Receita',
+        categories: '',
         dateExpensive: new Date(),
         showDatePickerExpensive: false,
         methodEdit: false
 }
-
 export default class NewExpensive extends Component {
         state = {
                 ...initialState
@@ -42,17 +42,7 @@ export default class NewExpensive extends Component {
                 this.setState({ ...initialState })
 
         }
-        edit = () => {
-                const editExpensive = {
-                        name: this.state.name,
-                        expensiveValue: this.state.expensiveValue,
-                        dateExpensive: this.state.dateExpensive,
-                        categories: this.state.categories
-                }
-                this.props.onEdit && this.props.onEdit(editExpensive)
-                this.setState({ ...initialState })
-        }
-
+        
         getDateTimePickerExpensive = () => {
                 let datePicker = <DateTimePicker
                         value={this.state.dateExpensive}
@@ -76,11 +66,14 @@ export default class NewExpensive extends Component {
                 return datePicker
         }
 
-        editOrSave = () => {
-        }
+        // changeStates = () => {
+        //         this.setState.expensiveValue
+        //         this.props.onSelected.expensiveValue
+        // }
 
         render() {
                 const { name, expensiveValue, dateExpensive, categories } = this.props.onSelected[0] || {}
+
                 return (
                         <Modal transparent={true}
                                 visible={this.props.isVisible}
@@ -96,8 +89,9 @@ export default class NewExpensive extends Component {
                                         <Text>
                                                 Selecione a categoria:
                                         </Text>
-                                        <Picker onValueChange={(itemValue, itemIndex) => this.setState({ itemValue })}
+                                        <Picker onValueChange={(categories) => this.setState({ categories })}
                                                 selectedValue={this.categories}>
+                                                <Picker.Item label=" " value=" " />
                                                 <Picker.Item label="Receita" value="Receita" />
                                                 <Picker.Item label="Despesa" value="Despesa" />
                                         </Picker>
@@ -107,8 +101,9 @@ export default class NewExpensive extends Component {
 
                                         <TextInput
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={name => this.setState({ name })}
-                                                value={this.state.text || name}
+                                                onChangeText={name => this.setState({ name})}
+                                                value={name}
+                                                editable={true}
                                         />
 
                                         <Text>
@@ -117,9 +112,10 @@ export default class NewExpensive extends Component {
 
                                         <TextInput
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={expensiveValue => this.setState({ expensiveValue })}
-                                                value={this.setState.expensiveValue || expensiveValue}
+                                                onChangeText={expensiveValue => this.setState({ expensiveValue})}
+                                                value={expensiveValue}
                                                 keyboardType="numeric"
+                                                editable={true}
                                         />
                                         <Text>
                                                 Confirme a  data da despesa:
@@ -130,10 +126,6 @@ export default class NewExpensive extends Component {
                                         <Button
                                                 title="Salvar"
                                                 onPress={this.save}
-                                        />
-                                        <Button
-                                                title="Editar"
-                                                onPress={this.edit}
                                         />
                                         <Button
                                                 title="Cancelar"
@@ -157,6 +149,7 @@ const styles = StyleSheet.create({
                 flex: 1,
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
         }, modalContainer: {
-                backgroundColor: '#FFF'
+                backgroundColor: '#FFF',
+                padding: 10,
         }
 })

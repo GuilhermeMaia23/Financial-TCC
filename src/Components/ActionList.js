@@ -1,84 +1,75 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-export default function GoalsList(props) {
-
-    const date = moment(props.dateEnd).locale('pt-br').format('L')
-
+export default function ActionList (props){
+    
+    const date = moment(props.dateAction).locale('pt-br').format('L')
     const rightContent = () => {
         return(
-            <TouchableOpacity style={styleGoals.right}
+            <TouchableOpacity style={styleExpensive.right}
             onPress={() => props.onDelete && props.onDelete(props.id)}>
-                <Icon  name="trash" size={30} color='#FFF'/>
+                <Icon name="trash" size={30} color='#FFF'/>
             </TouchableOpacity>
         )
     }
-    const leftContent = () => {
-        return(
-            <TouchableOpacity style={styleGoals.left}>
-                <Icon  name="pencil" size={30} color='#FFF'/>
-            </TouchableOpacity>
-        )
-    }
-
-    return (
+    return(
         <Swipeable
-        renderRightActions={rightContent}
-        renderLeftActions={leftContent}>
-            <View style={styleGoals.container}>
-                <View style={styleGoals.textContainer}>
-                    <Text style={styleGoals.text} >{props.text}</Text>
-                    <Text style={styleGoals.text}>{date}</Text>
+        renderRightActions={rightContent}>
+            <View style={styleExpensive.container}>
+                <View style={styleExpensive.categoriesContainer}>
+                    <Text style={styleExpensive.text}>{props.typeOf} </Text>
                 </View>
-                <View style={styleGoals.valeuContainer}>
-                    <Text style={styleGoals.text}>{props.goalsValue}</Text>
+                <View style={styleExpensive.nameDateContainer}>
+                    <Text style={styleExpensive.text}>{props.name}</Text>
+                    <Text style={styleExpensive.text}>{date}</Text>
                 </View>
-                <View style={styleGoals.faltando}>
-                    <Text style={styleGoals.text}> {'Total arrecadado:' + props.amountCollected + ' de ' + props.goalsValue}</Text>
+                <View style={styleExpensive.valeuContainer}>
+                    <Text style={styleExpensive.text}>{"R$ " + props.actionValue}</Text>
                 </View>
             </View>
         </Swipeable>
-    )
+    )    
 }
 
-const styleGoals = StyleSheet.create({
+const styleExpensive = StyleSheet.create({
     container: {
         flexDirection: 'row',
         borderColor: '#AAA',
         borderBottomWidth: 1,
-        paddingVertical: 10,
-        marginTop: 10,
+        padding: 10,
         backgroundColor: '#FFF',
-        width: '95%',
+        width: '90%',
         alignSelf: 'center',
         justifyContent: "center",
         borderRadius: 13,
     },
     text: {
-        
+        color: '#4B5056',
         fontSize: 15,
     },
-    textContainer: {
+    categoriesContainer: {
+        flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: "center",
         alignItems: "center",
         width: '30%'
     },
-    valeuContainer: {
+    nameDateContainer: {
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",
         width: '30%'
     },
-    faltando: {
+    valeuContainer: {
+        flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: "center",
         alignItems: "center",
-        width: '40%'
+        width: '30%'
     }, right: {
         backgroundColor: 'red',
         flexDirection: "row",
@@ -86,7 +77,7 @@ const styleGoals = StyleSheet.create({
         justifyContent: "flex-end",
         paddingHorizontal: 20,
     }, left: {
-        backgroundColor: 'yellow',
+        backgroundColor: '#ffef2a',
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: "flex-end",

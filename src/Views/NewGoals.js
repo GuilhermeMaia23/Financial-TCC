@@ -17,6 +17,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 const initialState = {
         name: ' ',
         goalsValue: ' ',
+        amountCollected: ' ',
         dateEnd: new Date(),
         showDatePickerGoals: false
 }
@@ -32,6 +33,7 @@ export default class NewGoals extends Component {
                         goalsValue: this.state.goalsValue,
                         dateInit: this.state.dateInit,
                         dateEnd: this.state.dateEnd,
+                        amountCollected: this.state.amountCollected
                 }
 
                 this.props.onSave && this.props.onSave(newGoals)
@@ -71,13 +73,14 @@ export default class NewGoals extends Component {
                         <Modal transparent={true}
                                 visible={this.props.isVisible}
                                 onRequestClose={this.props.onCancel}
-                                animationType='slide'>
+                                animationType='slide'
+                                style={styles.modalContainer}>
                                 <TouchableWithoutFeedback
                                         onPress={this.props.onCancel}>
                                         <View style={styles.background}>
                                         </View>
                                 </TouchableWithoutFeedback>
-                                <View>
+                                <View style={styles.modalContainer}>
                                         <Text>
                                                 Digite o nome da nova meta
                                         </Text>
@@ -96,6 +99,16 @@ export default class NewGoals extends Component {
                                                 style={{ borderWidth: 1 }}
                                                 onChangeText={goalsValue => this.setState({ goalsValue })}
                                                 value={this.state.goalsValue}
+                                                keyboardType="numeric"
+                                        />
+                                        <Text>
+                                                Digite o valor arrecadado até o momento:
+                                        </Text>
+
+                                        <TextInput
+                                                style={{ borderWidth: 1 }}
+                                                onChangeText={amountCollected => this.setState({ amountCollected })}
+                                                value={this.state.amountCollected}
                                                 keyboardType="numeric"
                                         />
                                         <Text>
@@ -129,5 +142,8 @@ const styles = StyleSheet.create({
         background: {
                 flex: 1,
                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        }, modalContainer: {
+                backgroundColor: '#FFF',
+                padding: 10,
         }
 })
